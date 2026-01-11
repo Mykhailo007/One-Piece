@@ -21,7 +21,14 @@ export async function fetchCatalog(serverUrl: string): Promise<Catalog> {
 export async function testServerConnection(serverUrl: string): Promise<boolean> {
   try {
     const url = joinUrl(serverUrl, '/health');
-    const response = await fetch(url, { timeout: 5000 } as any);
+    
+    // Create a timeout promise
+    const timeoutPromise = new Promise<Response>((_, reject) => {
+      setTimeout(() => reject(new Error('Connection timeout')), 5000);
+    });
+    
+    const fetchPromise = fetch(url);
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
     
     if (!response.ok) {
       return false;
