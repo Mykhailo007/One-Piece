@@ -50,3 +50,5 @@ yarn-error.*
 *.swp
 *.swo
 *~
+
+rndm.txt
