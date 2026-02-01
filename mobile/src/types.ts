@@ -7,6 +7,7 @@ export interface Episode {
   mediaUrl: string;
   imageUrl: string;
   duration: number;
+  introEnd?: number; // Optional: timestamp in seconds where intro/recap ends
 }
 
 export interface Catalog {
